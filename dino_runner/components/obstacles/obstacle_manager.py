@@ -1,5 +1,6 @@
 
 import pygame
+import random
 from dino_runner.utils.constants import SMALL_CACTUS
 from dino_runner.components.obstacles.cactus import Cactus
 
@@ -9,7 +10,10 @@ class ObstacleManager:
         
     def update(self, game):
         if len(self.obstacles) == 0:
-            self.obstacles.append(Cactus(SMALL_CACTUS))
+            #Elige aleatoriamente entre SMALL y LARGE
+            cactus_type = 'SMALL' if random.randint(0, 1) == 0 else 'LARGE'
+            cactus = Cactus(cactus_type)
+            self.obstacles.append(cactus)
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):
